@@ -1,0 +1,7 @@
+1. Click "Forgot password"
+2. Fill out a form with their email address.
+
+// need to be made
+3. Prepare a unique token and associate it with the user's account.
+4. Send an email with a unique link back to our site that confirm email ownership.
+5. Link back to website, confirm the token, and set a new password.

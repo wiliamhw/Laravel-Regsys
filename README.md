@@ -1,0 +1,1 @@
+Exercise using Laravel registration and login page template about mail and notification in Laravel.
