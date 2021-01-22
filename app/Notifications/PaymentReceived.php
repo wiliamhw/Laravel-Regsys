@@ -3,22 +3,23 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Messages\NexmoMessage;
 
 class PaymentReceived extends Notification
 {
     use Queueable;
+    protected $amount;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($amount)
     {
-        //
+        $this->amount = $amount;
     }
 
     /**
@@ -29,7 +30,7 @@ class PaymentReceived extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'database', 'nexmo'];
     }
 
     /**
@@ -41,12 +42,12 @@ class PaymentReceived extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject("Your Laracast Payment Was Received")
-                    ->greeting("What's Up?")
-                    ->line('The introduction to the notification.')
-                    ->line('Lorem ipsum dolor sit amet, sonsectetur adipiscing elit.')
-                    ->action('Sign up', url('/'))
-                    ->line('Thanks!');
+            ->subject("Your Laracast Payment Was Received")
+            ->greeting("What's Up?")
+            ->line('The introduction to the notification.')
+            ->line('Lorem ipsum dolor sit amet, sonsectetur adipiscing elit.')
+            ->action('Sign up', url('/'))
+            ->line('Thanks!');
     }
 
     /**
@@ -55,10 +56,22 @@ class PaymentReceived extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray($notifiable) // to database
     {
         return [
-            //
+            'amount' => $this->amount
         ];
+    }
+
+    /**
+     * Get the Nexmo / SMS representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return NexmoMessage
+     */
+    public function toNexmo($notifiable)
+    {
+        return (new NexmoMessage)
+            ->content('Your Laracast payment has been processed!');
     }
 }
