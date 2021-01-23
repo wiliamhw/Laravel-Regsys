@@ -31,6 +31,6 @@ return [
     ],
 
     'nexmo' => [
-        'sms_from' => $_ENV['PHONE_NUMBER'],
+        'sms_from' => $_ENV['PHONE_NUMBER_FROM'],
     ],
 ];

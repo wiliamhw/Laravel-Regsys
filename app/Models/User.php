@@ -43,6 +43,6 @@ class User extends Authenticatable
 
     public function routeNotificationForNexmo($notification)
     {
-        return $_ENV['PHONE_NUMBER'];
+        return $_ENV['PHONE_NUMBER_TO'];
     }
 }
