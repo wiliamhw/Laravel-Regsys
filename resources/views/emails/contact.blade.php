@@ -3,7 +3,7 @@
 
 The body of your message.
 
-@component('mail::button', ['url' => ''])
+@component('mail::button', ['url' => 'https://github.com/wiliamhw'])
 Button Text
 @endcomponent
 
